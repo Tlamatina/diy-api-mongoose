@@ -1,26 +1,16 @@
-// Require the modules needed
-let mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-// Create a Schema instance for Blog
-let blogSchema = new mongoose.Schema({
-  _id: {
-    type: Number,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: Number,
-    required: true
-  },
-  
-  content: {
-    type: String,
-    required: true
-  },
-  
+const BlogSchema = new mongoose.Schema({
+    name: {
+        type: String
+    },
+    title: {
+        type: Number
+    },
+    content: {
+        type: String
+    }
+
 })
 
-module.exports = mongoose.model('Blog', blogSchema)
+module.exports = BlogSchema

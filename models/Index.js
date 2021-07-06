@@ -1,8 +1,31 @@
-let mongoose = require('mongoose')
+const mongoose = require('mongoose')
+require('dotenv').config()
 
-mongoose.connect(process.env.ATLAS_URI || 'mongodb://localhost/hunters', {
-     useNewUrlParser: true, 
-     useUnifiedTopology: true
-    });
+const connect = () => {
+    const uri = process.env.ATLAS_URI
 
-module.exports.Blog = require('./blog')
+    mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    })
+
+    const db = mongoose.connection
+
+    db.once('open', () => {
+        console.log(`connected to ${db.host}: ${db.port}`)
+    })
+
+    db.on('error', error => {
+        console.log(`errorrrrr!!! \n ${error}`)
+    })
+}
+
+module.exports = {
+    connect,
+    Blog: mongoose.model('Blog', require('./Blog'))
+}
+
+
+
